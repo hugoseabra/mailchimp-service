@@ -1,0 +1,12 @@
+Django==3.0.2
+django-celery-beat==1.6.0
+django-environ==0.4.5
+django-timezone-field==4.0
+djangorestframework==3.11.0
+drf-nested-routers==0.91
+celery==4.4.0
+inquirer==2.6.3
+lxml==4.5.0
+mailchimp3==3.0.12
+psycopg2==2.8.4 --no-binary psycopg2
+uuid==1.30

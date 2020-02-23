@@ -1,0 +1,8 @@
+-r requirements.txt
+model-mommy
+gitchangelog
+django-extensions
+coverage
+# graph models
+pydotplus
+pyparsing
