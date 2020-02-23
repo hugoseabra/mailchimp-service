@@ -32,10 +32,12 @@ class NamespaceSerializer(FormSerializerMixin, serializers.ModelSerializer):
             'api_key',
             'external_id',
             'default_list_name',
+            'default_list_id',
             'healthy',
             'sync_phone',
             'sync_address',
             'create_fields',
+            'create_notes',
             'created_at',
             'updated_at',
         )
