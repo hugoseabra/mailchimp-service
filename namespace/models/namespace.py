@@ -44,6 +44,15 @@ class Namespace(UUIDPkMixin,
         blank=False,
     )
 
+    default_tag = models.CharField(
+        max_length=80,
+        verbose_name=_('Default tag'),
+        null=False,
+        blank=False,
+        unique=True,
+        db_index=True,
+    )
+
     external_id = models.CharField(
         max_length=255,
         verbose_name=_('external ID'),

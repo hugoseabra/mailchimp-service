@@ -11,6 +11,7 @@ class NamespaceForm(forms.ModelForm):
             'slug',
             'api_key',
             'external_id',
+            'default_tag',
             'default_list_id',
             'healthy',
             'sync_phone',

@@ -1,1 +1,28 @@
-[{"model": "audience.member", "pk": "7058c114-9d4d-4f80-8fe3-4ef5834c40d1", "fields": {"created_at": "2020-02-20T22:41:49.565Z", "updated_at": "2020-02-21T03:11:45.007Z", "namespace": "91a0a247-7dd5-4888-8d5a-bc3b0adaa347", "first_name": "HUGO", "last_name": "BATISTA", "email": "hugo2@congressy.com", "birthday": "1983-01-22", "phone_country_code": "+55", "phone_region_code": "62", "phone_number": "988885555", "address1": "Avenida San Martin", "address2": "Jardim Novo Mundo", "city": "GOI\u00c2NIA", "state": "GO", "zip_code": "74710040", "external_id": "e411161d-9985-4e4a-bba8-ae4f13803723", "mailchimp_id": "", "tags": "Congressy,Congressy - pendente", "synchronized": false, "excluded": false}}]
+[
+  {
+    "model": "audience.member",
+    "pk": "7058c114-9d4d-4f80-8fe3-4ef5834c40d1",
+    "fields": {
+      "created_at": "2020-02-20T22:41:49.565Z",
+      "updated_at": "2020-02-21T03:11:45.007Z",
+      "namespace": "91a0a247-7dd5-4888-8d5a-bc3b0adaa347",
+      "first_name": "HUGO",
+      "last_name": "BATISTA",
+      "email": "hugo2@congressy.com",
+      "birthday": "1983-01-22",
+      "phone_country_code": "+55",
+      "phone_region_code": "62",
+      "phone_number": "988885555",
+      "address1": "Avenida San Martin",
+      "address2": "Jardim Novo Mundo",
+      "city": "GOI\u00c2NIA",
+      "state": "GO",
+      "zip_code": "74710040",
+      "external_id": "e411161d-9985-4e4a-bba8-ae4f13803723",
+      "mailchimp_id": "",
+      "tags": "Congressy;Congressy - pendente",
+      "synchronized": false,
+      "excluded": false
+    }
+  }
+]
