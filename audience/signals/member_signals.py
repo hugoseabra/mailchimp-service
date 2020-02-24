@@ -14,7 +14,8 @@ def update_synchronization_type_on_edition(instance, raw, created, **_):
     has_changed = instance.has_changed('namespace_id') or \
                   instance.has_changed('first_name') or \
                   instance.has_changed('last_name') or \
-                  instance.has_changed('email')
+                  instance.has_changed('email') or \
+                  instance.has_changed('tags')
 
     miss_mc_id = not instance.mailchimp_id
 

@@ -10,7 +10,7 @@ from core.models.mixins import (
 )
 
 
-@track_data('namespace_id', 'first_name', 'last_name', 'email',)
+@track_data('namespace_id', 'first_name', 'last_name', 'email', 'tags')
 class Member(UUIDPkMixin,
              EntityMixin,
              DateTimeManagementMixin,

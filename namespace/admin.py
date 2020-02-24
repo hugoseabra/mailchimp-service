@@ -9,7 +9,8 @@ from .tasks import validate_namespace
 
 def validate_namespaces(modeladmin, request, queryset):
     for item in queryset:
-        validate_namespace.delay(namespace_pk=item.pk, force_validation=False)
+        force = not item.default_list_id
+        validate_namespace.delay(namespace_pk=item.pk, force_validation=force)
 
     num = queryset.count()
     messages.success(

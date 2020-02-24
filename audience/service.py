@@ -76,9 +76,7 @@ def update_tags(member: Member):
         subscriber_hash=get_member_hash(member),
     )
 
-    tags = {
-        namespace.default_tag: 'active',
-    }
+    tags = dict()
 
     if member.tags:
         for t in existing_tags.get('tags', list()):
@@ -87,6 +85,10 @@ def update_tags(member: Member):
         for m_tag in member.tags.split(';'):
             t = m_tag.strip()
             tags[t] = 'active'
+
+    tags.update({
+        namespace.default_tag: 'active',
+    })
 
     namespace.service.lists.members.tags.update(
         list_id=namespace.default_list_id,
