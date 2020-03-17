@@ -23,6 +23,13 @@ class ListFieldViewset(viewsets.ModelViewSet):
     serializer_class = ListFieldSerializer
     queryset = ListFieldSerializer.Meta.model.objects.get_queryset()
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(
+            namespace_id=self.kwargs.get('namespace_pk'),
+        )
+        return queryset
+
     def get_serializer(self, *args, **kwargs):
         serializer = super().get_serializer(*args, **kwargs)
         serializer.namespace_pk = self.kwargs.get('namespace_pk')
@@ -39,8 +46,8 @@ class MailChimpListViewset(viewsets.ViewSet):
     def get_mailchimp_client():
         return service.get_client()
 
-    # Cache requested url for each user for 2 hours
-    @method_decorator(cache_page(60 * 60 * 2))
+    # Cache requested url for each user for 10 minutes
+    @method_decorator(cache_page(60 * 10))
     def list(self, request, *args, **kwargs):
         namespace = self.kwargs.get('namespace_pk')
 
@@ -56,6 +63,7 @@ class MailChimpListViewset(viewsets.ViewSet):
 
         try:
             namespace = models.Namespace.objects.get(pk=namespace_pk)
+            return Response(data=get_lists(namespace))
 
         except models.Namespace.DoesNotExist:
             content = {'detail': [
@@ -63,7 +71,9 @@ class MailChimpListViewset(viewsets.ViewSet):
             ]}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-        return Response(data=get_lists(namespace))
+        except Exception as e:
+            content = {'detail': [str(e)]}
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
     # Cache requested url for each user for 2 hours
     @method_decorator(cache_page(60 * 60 * 2))
