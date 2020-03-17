@@ -1,4 +1,5 @@
-DOCKER_COMPOSE_ENV=conf/docker-compose_dev.yml
+DOCKER_COMPOSE_DEV=conf/docker-compose_dev.yml
+DOCKER_COMPOSE_PROD=conf/docker-compose_prod.yml
 CELERY_SERVICES=-A project
 CELERY_PID_FILE=/tmp/celery.pid
 CELERY_LOG_FILE=/tmp/broker.log
@@ -8,7 +9,7 @@ DOCKER_IMAGE_NAME=mailchimp-service
 DOCKERFILE=conf/Dockerfile
 
 # Inicializa ambiente
-.PHONY: init
+.PHONY: up
 up:
 	@make update-db
 	@make add-fixtures
@@ -120,4 +121,4 @@ build-image:
 .PHONY: push-image
 push-image:
 	@docker start awsecr
-	@docker exec awsecr push $(DOCKER_IMAGE_NAME)
+	@docker exec -ti awsecr push $(DOCKER_IMAGE_NAME)
