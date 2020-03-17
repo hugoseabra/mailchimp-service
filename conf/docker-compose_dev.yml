@@ -24,6 +24,17 @@ services:
     networks:
       - rabbitmq
 
+  pgadmin:
+    image: thajeztah/pgadmin4
+    container_name: mailchimp-serv-pgadmin
+    ports:
+      - "5050:5050"
+    volumes:
+      - pgadmin_data:/pgadmin
+
+volumes:
+  pgadmin_data:
+
 networks:
   rabbitmq:
     name: local_rabbitmq
