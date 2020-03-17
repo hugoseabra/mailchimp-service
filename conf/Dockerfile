@@ -8,7 +8,7 @@ FROM python:3.7-slim
 # Celery does not work with root unless you force it
 ENV C_FORCE_ROOT true
 
-LABEL mailchimp.image.name="mailchimp-app"
+LABEL cgsy.image.name="mailchimp-service"
 
 # Install packages needed to run your application (not build deps):
 #   mime-support -- for mime types when serving static files
