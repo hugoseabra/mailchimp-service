@@ -39,7 +39,7 @@ class FormSerializerMixin:
 
         return data
 
-    def to_internal_value(self, data: dict):
+    def normalize_data(self, data):
         for k, v in data.items():
             if isinstance(v, dict) is False:
                 continue
@@ -49,6 +49,10 @@ class FormSerializerMixin:
                     data[k] = v[pk_key]
                     break
 
+        return data
+
+    def to_internal_value(self, data: dict):
+        data = self.normalize_data(data)
         return super().to_internal_value(data)
 
     def validate(self, data):
