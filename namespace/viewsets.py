@@ -5,10 +5,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.authentication import (
+    SessionAuthentication,
+    BasicAuthentication,
+    TokenAuthentication,
+)
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from mailchimp_service import service
 from namespace import models
 from .serializers import NamespaceSerializer, ListFieldSerializer
 from .service import get_lists, get_list_by_id
@@ -17,11 +21,23 @@ from .service import get_lists, get_list_by_id
 class NamespaceViewset(viewsets.ModelViewSet):
     serializer_class = NamespaceSerializer
     queryset = NamespaceSerializer.Meta.model.objects.get_queryset()
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (
+        SessionAuthentication,
+        BasicAuthentication,
+        TokenAuthentication,
+    )
 
 
 class ListFieldViewset(viewsets.ModelViewSet):
     serializer_class = ListFieldSerializer
     queryset = ListFieldSerializer.Meta.model.objects.get_queryset()
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (
+        SessionAuthentication,
+        BasicAuthentication,
+        TokenAuthentication,
+    )
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -40,11 +56,12 @@ class MailChimpListViewset(viewsets.ViewSet):
     """
     MailChimp namespace list
     """
-    permission_classes = (AllowAny,)
-
-    @staticmethod
-    def get_mailchimp_client():
-        return service.get_client()
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (
+        SessionAuthentication,
+        BasicAuthentication,
+        TokenAuthentication,
+    )
 
     # Cache requested url for each user for 10 minutes
     @method_decorator(cache_page(60 * 10))
