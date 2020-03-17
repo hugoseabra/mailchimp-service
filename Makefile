@@ -3,6 +3,9 @@ CELERY_SERVICES=-A project
 CELERY_PID_FILE=/tmp/celery.pid
 CELERY_LOG_FILE=/tmp/broker.log
 NOW=$(shell date --iso=seconds)
+DOCKER_REPO=871800672816.dkr.ecr.us-east-1.amazonaws.com
+DOCKER_IMAGE_NAME=mailchimp-service
+DOCKERFILE=conf/Dockerfile
 
 # Inicializa ambiente
 .PHONY: init
@@ -109,3 +112,12 @@ broker_debug: broker_kill
 broker_follow_log:
 	touch $(CELERY_LOG_FILE)
 	tail -f  $(CELERY_LOG_FILE)
+
+.PHONY: build-image
+build-image:
+	@docker build --compress --rm -f $(DOCKERFILE) -t $(DOCKER_REPO)/$(DOCKER_IMAGE_NAME):latest .
+
+.PHONY: push-image
+push-image:
+	@docker start awsecr
+	@docker exec awsecr push $(DOCKER_IMAGE_NAME)
