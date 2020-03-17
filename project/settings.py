@@ -17,7 +17,6 @@ import environ
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    EMAIL_USE_TLS=(bool, False),
 )
 # reading .env file
 environ.Env.read_env()
@@ -49,6 +48,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_celery_beat',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_swagger',
 
     'mailchimp_service',
     'namespace',
@@ -72,6 +73,8 @@ ROOT_URLCONF = 'project.urls'
 ALLOWED_HOSTS = ['*']
 
 WSGI_APPLICATION = 'project.wsgi.application'
+
+SITE_ID = 1
 
 # =========================== TEMPLATES =======================================
 TEMPLATES = [
@@ -135,7 +138,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/v1/mailchimp/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/v1/mailchimp/media/'
 
 # =============================== FIXTURES ====================================
 FIXTURE_DIRS = [
@@ -144,7 +151,11 @@ FIXTURE_DIRS = [
 
 # ================================ CELERY ==================================== #
 # CELERY STUFF
-CELERY_BROKER_URL = 'amqp://admin:admin@localhost:5672/'
+CELERY_BROKER_URL = 'amqp://{user}:{password}@{server}:5672/'.format(
+    user=env.str('CELERY_USER'),
+    password=env.str('CELERY_PASSWORD'),
+    server=env.str('CELERY_SERVER'),
+)
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -163,5 +174,5 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S%z",
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 50
+    'PAGE_SIZE': 50,
 }
