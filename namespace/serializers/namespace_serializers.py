@@ -1,7 +1,10 @@
 from rest_framework import serializers
 
 from core.serializers import FormSerializerMixin
-from . import forms
+from namespace import forms
+
+
+# from . import ListFieldSerializer
 
 
 class SimpleNamespaceSerializer(serializers.ModelSerializer):
@@ -43,40 +46,3 @@ class NamespaceSerializer(FormSerializerMixin, serializers.ModelSerializer):
             'created_at',
             'updated_at',
         )
-
-
-class ListFieldSerializer(FormSerializerMixin, serializers.ModelSerializer):
-    class Meta:
-        form = forms.ListFieldForm
-        model = forms.ListFieldForm.Meta.model
-        fields = (
-            'pk',
-            'label',
-            'tag',
-            'field_type',
-            'help_text',
-            'active',
-            'created_at',
-            'updated_at',
-        )
-        write_only_fields = ('namespace',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.namespace_pk = None
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-
-        rep['namespace'] = \
-            SimpleNamespaceSerializer(instance=instance.namespace).data
-
-        return rep
-
-    def get_form(self, data=None, files=None, **kwargs):
-        if data:
-            data = data.copy()
-            data.update({
-                'namespace': self.namespace_pk,
-            })
-        return super().get_form(data, files, **kwargs)

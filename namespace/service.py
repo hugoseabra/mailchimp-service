@@ -46,6 +46,7 @@ def get_lists(namespace: Namespace):
         except MailChimpError as e:
             from pprint import pprint
             pprint(e)
+            raise e
 
     return result
 
@@ -73,6 +74,7 @@ def get_list_by_id(namespace: Namespace, list_id: str):
         except MailChimpError as e:
             from pprint import pprint
             pprint(e)
+            raise e
 
     return result
 

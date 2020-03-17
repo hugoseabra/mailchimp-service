@@ -63,7 +63,7 @@ class Namespace(UUIDPkMixin,
     )
 
     api_key = models.CharField(
-        max_length=36,
+        max_length=48,
         verbose_name=_('api key'),
         null=False,
         blank=False,

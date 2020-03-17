@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib import messages
 
 from .forms import NamespaceForm
-from .models import Namespace
+from .models import Namespace, ListField
 from .tasks import validate_namespace
 
 
@@ -54,3 +54,27 @@ class NamespaceAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
     )
+
+
+@admin.register(ListField)
+class ListFieldAdmin(admin.ModelAdmin):
+    list_display = (
+        'label',
+        'field_type',
+        'namespace',
+        'tag',
+        'active',
+    )
+    search_fields = (
+        'label',
+        'namespace',
+        'tag',
+    )
+    readonly_fields = (
+        'pk',
+        'created_at',
+        'updated_at',
+    )
+    list_filter = ('field_type', 'created_at', 'updated_at', 'active')
+    date_hierarchy = 'created_at'
+    raw_id_fields = ('namespace',)
