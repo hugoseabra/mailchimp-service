@@ -67,6 +67,7 @@ def add_update_note(member: Member):
 
 def update_tags(member: Member):
     namespace = member.namespace
+    prefix = namespace.default_tag
 
     if not member.tags:
         return
@@ -80,11 +81,13 @@ def update_tags(member: Member):
 
     if member.tags:
         for t in existing_tags.get('tags', list()):
-            tags[t.get('name')] = 'inactive'
+            name = t.get('name')
+            tags[name] = 'inactive'
 
         for m_tag in member.tags.split(';'):
             t = m_tag.strip()
-            tags[t] = 'active'
+            name = '{}:{}'.format(prefix, t)
+            tags[name] = 'active'
 
     tags.update({
         namespace.default_tag: 'active',

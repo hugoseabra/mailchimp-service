@@ -16,6 +16,11 @@ class MemberFieldViewset(viewsets.ModelViewSet):
     serializer_class = MemberFieldSerializer
     queryset = MemberFieldSerializer.Meta.model.objects.get_queryset()
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(member_id=self.kwargs.get('member_pk'))
+        return queryset
+
     def get_serializer(self, *args, **kwargs):
         serializer = super().get_serializer(*args, **kwargs)
         serializer.member_pk = self.kwargs.get('member_pk')
