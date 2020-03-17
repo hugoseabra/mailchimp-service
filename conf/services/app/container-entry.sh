@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source /app_conf/services/scripts.sh
+touch /code/.env
 
 run_python_script "Coletando arquivos estáticos" "manage.py collectstatic --noinput --verbosity 0"
 run_python_script_with_output "Atualizando Site ID" "manage.py loaddata 000_site"

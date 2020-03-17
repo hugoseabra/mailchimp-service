@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source /app_conf/services/scripts.sh
+touch /code/.env
 
 # Define settings
 export DJANGO_SETTINGS_MODULE=project.settings
@@ -12,9 +13,4 @@ echo " > Iniciando CELERY"
 echo ;
 echo "########################################################################"
 echo ;
-celery \
-    -E --loglevel=INFO \
-    -A namespace \
-    -A audience \
-    worker -B -l INFO \
-    --scheduler django -s /tmp/beat-scheduler --logfile="/tmp/celery-logs/celery.log"
+celery -E --loglevel=INFO -A project worker -B -l INFO --scheduler django -s /tmp/beat-scheduler --logfile="/tmp/celery-logs/celery.log"

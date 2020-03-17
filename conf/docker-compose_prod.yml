@@ -13,7 +13,7 @@ services:
     ports:
       - "8000"
     networks:
-      - net_lb
+      - api_proxy_net
     entrypoint:
       - /app_conf/services/app/container-entry.sh
     volumes:
@@ -24,7 +24,7 @@ services:
       - "traefik.http.middlewares.mailchimp_service.stripprefix.prefixes=/v1/mailchimp"
       - "traefik.http.routers.mailchimp_service.entrypoints=web"
       - "traefik.protocol=http"
-      - "traefik.docker.network=net_lb"
+      - "traefik.docker.network=api_proxy_net"
 
   celery:
     image: 871800672816.dkr.ecr.us-east-1.amazonaws.com/mailchimp-service:latest
