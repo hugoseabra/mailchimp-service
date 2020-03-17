@@ -3,8 +3,8 @@ Tasks to run in parallell
 """
 
 from namespace.models import Namespace
+from project.celery import app
 from . import models
-from .celery import app
 from .service import sync_member as _sync_member
 
 

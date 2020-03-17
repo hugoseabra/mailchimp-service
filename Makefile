@@ -1,5 +1,5 @@
 DOCKER_COMPOSE_ENV=conf/docker-compose_dev.yml
-CELERY_SERVICES=-A namespace -A audience
+CELERY_SERVICES=-A project
 CELERY_PID_FILE=/tmp/celery.pid
 CELERY_LOG_FILE=/tmp/broker.log
 NOW=$(shell date --iso=seconds)
@@ -7,7 +7,6 @@ NOW=$(shell date --iso=seconds)
 # Inicializa ambiente
 .PHONY: init
 up:
-	@make down
 	@make update-db
 	@make add-fixtures
 	@echo "\nAddress: http://localhost:8000/admin"
@@ -34,6 +33,11 @@ destroy-services: broker_kill
 .PHONY: logs
 logs:
 	docker-compose -f $(DOCKER_COMPOSE_ENV) logs -f
+
+.PHONY: stop
+stop:
+	docker-compose -f $(DOCKER_COMPOSE_ENV) stop
+
 
 .PHONY: services
 services:
@@ -90,6 +94,7 @@ broker_create: broker_kill
 .PHONY: broker_kill
 broker_kill:
 	ps x --no-header -o pid,cmd | awk '!/awk/&&/celery/{print $$1}' | xargs -r kill
+	rm -f $(CELERY_PID_FILE)
 
 .PHONY: broker_restart
 broker_restart:

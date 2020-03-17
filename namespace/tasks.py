@@ -2,8 +2,9 @@
 Tasks to run in parallell
 """
 
+from project.celery import app
+
 from . import models
-from .celery import app
 from .service import validate_namespace as _validate_namespace
 
 
