@@ -2,8 +2,8 @@
 from django.contrib import admin, messages
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import MemberForm
-from .models import Member
+from .forms import MemberForm, MemberFieldForm
+from .models import Member, MemberField
 from .tasks import sync_member as _sync_member
 
 
@@ -71,3 +71,23 @@ class MemberAdmin(admin.ModelAdmin):
 
     healthy.short_description = _('healthy')
     healthy.boolean = True
+
+
+@admin.register(MemberField)
+class MemberFieldAdmin(admin.ModelAdmin):
+    form = MemberFieldForm
+    list_display = (
+        'member',
+        'list_field'
+    )
+    list_filter = ('created_at', 'updated_at')
+    date_hierarchy = 'created_at'
+    readonly_fields = (
+        'pk',
+        'created_at',
+        'updated_at',
+    )
+    raw_id_fields = (
+        'member',
+        'list_field',
+    )
