@@ -2,7 +2,7 @@ Django==3.0.3
 django-celery-beat==1.6.0
 django-environ==0.4.5
 django-timezone-field==4.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 django-rest-swagger==2.1.2
 drf-nested-routers==0.91
 celery==4.4.0
